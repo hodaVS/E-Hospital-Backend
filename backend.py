@@ -74,34 +74,34 @@ class PrescriptionBackend:
             logger.error(f"Transcription failed: {str(e)}")
             raise
 
-    async def generate_prescription(self, user_input: str) -> PrescriptionResponse:
-        try:
-            messages = [
-                {"role": "system", "content": self.system_prompt},
-                {"role": "user", "content": user_input}
-            ]
+async def generate_prescription(self, user_input: str) -> PrescriptionResponse:
+    try:
+        messages = [
+            {"role": "system", "content": self.system_prompt},
+            {"role": "user", "content": user_input}
+        ]
 
-            completion = await self.client.chat.completions.create(
-                model="gpt-4",
-                messages=messages,
-                response_model=PrescriptionResponse, 
-                max_tokens=500,
-                temperature=0.1
-            )
+        completion = await self.client.chat.completions.create(
+            model="gpt-4",  # Ensure you have access to this model
+            messages=messages,
+            max_tokens=500,
+            temperature=0.1
+        )
 
-   
-            response_content = completion.choices[0].message.content
-            if isinstance(response_content, str):
-                response_content = response_content.replace('1-2', '"1-2"')
-                prescription_data = json.loads(response_content)
-            else:
-                prescription_data = response_content
+        response_content = completion.choices[0].message.content
+        logger.info(f"Raw OpenAI response: {response_content}")  # Log for debugging
+        if isinstance(response_content, str):
+            # Ensure the response is valid JSON
+            response_content = response_content.replace('1-2', '"1-2"')  # Fix ranges if needed
+            prescription_data = json.loads(response_content)
+        else:
+            prescription_data = response_content
 
-            return self._validate_prescription(prescription_data)
+        return self._validate_prescription(prescription_data)
 
-        except Exception as e:
-            logger.error(f"Prescription generation failed: {str(e)}")
-            return self._get_default_response()
+    except Exception as e:
+        logger.error(f"Prescription generation failed: {str(e)}")
+        return self._get_default_response()
 
     def _validate_prescription(self, data: Dict[str, Any]) -> PrescriptionResponse:
         """Ensure the prescription has all required fields with defaults"""
