@@ -140,15 +140,15 @@ class PrescriptionBackend:
                 buffer.write(await audio_file.read())
             logs.append("Audio file saved temporarily")
 
-            # Transcribe
+      
             user_input = await self.transcribe_audio(temp_path)
             logs.append(f"Transcribed text: {user_input}")
 
-            # Generate prescription
+      
             prescription = await self.generate_prescription(user_input)
             logs.append("Prescription generated successfully")
 
-            # Clean up
+         
             os.remove(temp_path)
             logs.append("Temporary file removed")
 
