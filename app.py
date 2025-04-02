@@ -29,10 +29,10 @@ async def transcribe_stream(audio: UploadFile = File(...)):
 @app.post("/chat")
 async def chat(text: str = Form(...)):
     try:
-        result, status_code = backend.process_chat_request(text)
-        if status_code != 200:
-            raise HTTPException(status_code=status_code, detail=result.get("error"))
-        return result
+        response = await backend.process_chat_request(text)  # Await the coroutine
+        if "error" in response:
+            raise HTTPException(status_code=400, detail=response["error"])
+        return response["response"]  # Return the prescription data
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
