@@ -82,17 +82,17 @@ class PrescriptionBackend:
             ]
     
             completion = await self.client.chat.completions.create(
-                model="gpt-4",  # Ensure you have access to this model
+                model="gpt-4",  
                 messages=messages,
                 max_tokens=500,
                 temperature=0.1
             )
     
             response_content = completion.choices[0].message.content
-            logger.info(f"Raw OpenAI response: {response_content}")  # Log for debugging
+            logger.info(f"Raw OpenAI response: {response_content}")  
             if isinstance(response_content, str):
-                # Ensure the response is valid JSON
-                response_content = response_content.replace('1-2', '"1-2"')  # Fix ranges if needed
+
+                response_content = response_content.replace('1-2', '"1-2"')  #
                 prescription_data = json.loads(response_content)
             else:
                 prescription_data = response_content
