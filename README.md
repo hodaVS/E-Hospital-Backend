@@ -3,11 +3,7 @@
 - Postman installed (download from https://www.postman.com/downloads/).
 - An audio file (e.g., `.wav`) for testing `/transcribe_stream`.
 
-1. Import the Postman Collection:
-   - Open Postman.
-   - Click "Import" in the top left.
-   - Select the file `E-Hospital-Prescription-Backend.postman_collection.json` and import it.
-2. You’ll see a collection named "E-Hospital Prescription Backend" with three requests.
+
 
 ## Testing the Endpoints
 ### 1. /chat 
