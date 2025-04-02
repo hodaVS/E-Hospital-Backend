@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend import PrescriptionBackend
 from typing import Optional
 import json
-
+from fastapi import Body
 app = FastAPI()
 backend = PrescriptionBackend()
 
@@ -26,13 +26,15 @@ async def transcribe_stream(audio: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
+
 @app.post("/chat")
-async def chat(text: str = Form(...)):
+async def chat(text: str = Body(...)):  
     try:
-        response = await backend.process_chat_request(text)  # Await the coroutine
+        response = await backend.process_chat_request(text)
         if "error" in response:
             raise HTTPException(status_code=400, detail=response["error"])
-        return response["response"]  # Return the prescription data
+        return response["response"]
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
