@@ -169,7 +169,6 @@ class PrescriptionBackend:
     async def process_chat_request(self, user_input: str) -> Dict[str, Any]:
         if not user_input:
             return {"error": "No text provided"}
-
         try:
             prescription = await self.generate_prescription(user_input)
             return {"response": prescription.dict()}
