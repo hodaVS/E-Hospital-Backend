@@ -2,7 +2,7 @@
 ## Frontend Testing
 You can interact with the backend through the frontend:
 
-URL: https://e-hospital-client.onrender.com/
+URL: (https://e-hospital-frontend-f30427acbeb1.herokuapp.com/)
 
 Steps:
 
