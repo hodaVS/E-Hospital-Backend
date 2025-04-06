@@ -24,7 +24,7 @@ You can interact with the backend through the frontend:
 URL: (https://e-hospital-frontend-f30427acbeb1.herokuapp.com/)
 
 Steps:
-### Chat Mode:
+### Chat Mode
 1. Open the link in a browser.
 
 2. In the text input field, paste:
